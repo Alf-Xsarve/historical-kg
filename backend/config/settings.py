@@ -3,16 +3,15 @@ from datetime import timedelta
 import os
 from dotenv import load_dotenv
 
-load_dotenv()  # Загружаем .env файл
+load_dotenv()
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-SECRET_KEY = os.getenv('SECRET_KEY', 'django-insecure-your-secret-key-here-change-in-production')
+SECRET_KEY = os.getenv('SECRET_KEY', 'django-insecure-change-me-in-production')
 
-# ====================== DEBUG ======================
-DEBUG = os.getenv('DEBUG', 'True').lower() == 'true'
+DEBUG = os.getenv('DEBUG', 'False').lower() == 'true'
 
-ALLOWED_HOSTS = ['*']  # На Railway/Vercel лучше оставить так
+ALLOWED_HOSTS = ['*']
 
 INSTALLED_APPS = [
     'jazzmin',
@@ -40,7 +39,7 @@ AUTH_USER_MODEL = 'users.User'
 MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
-    'whitenoise.middleware.WhiteNoiseMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',   # ← Должен быть сразу после Security
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -84,6 +83,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # ====================== STATIC & MEDIA ======================
 STATIC_URL = '/static/'
 STATIC_ROOT = BASE_DIR / 'staticfiles'
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 STATICFILES_DIRS = [
     BASE_DIR / 'config' / 'static',
@@ -107,14 +107,8 @@ SIMPLE_JWT = {
     'REFRESH_TOKEN_LIFETIME': timedelta(days=7),
 }
 
-# ====================== CORS (для Vercel + Railway) ======================
-CORS_ALLOWED_ORIGINS = [
-    "http://localhost:5173",
-    "http://127.0.0.1:5173",
-]
-
-# Разрешаем все домены на продакшене (можно позже ужесточить)
-CORS_ALLOW_ALL_ORIGINS = True if not DEBUG else False
+# ====================== CORS ======================
+CORS_ALLOW_ALL_ORIGINS = True
 CORS_ALLOW_CREDENTIALS = True
 
 # ====================== JAZZMIN ======================
@@ -150,6 +144,3 @@ JAZZMIN_UI_TWEAKS = {
     "navbar": "navbar-dark",
     "sidebar": "sidebar-dark-primary",
 }
-
-# Static files
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
