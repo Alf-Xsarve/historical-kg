@@ -1,9 +1,12 @@
 import { useState, useEffect } from 'react';
-import { useParams, Link } from 'react-router-dom';
+import { useParams, Link, useNavigate } from 'react-router-dom';
 import api from '../api/axios';
+import toast from 'react-hot-toast';
 
 export default function FigureDetail() {
   const { id } = useParams();
+  const navigate = useNavigate();
+  
   const [figure, setFigure] = useState(null);
   const [comments, setComments] = useState([]);
   const [newComment, setNewComment] = useState('');
@@ -38,15 +41,30 @@ export default function FigureDetail() {
     e.preventDefault();
     if (!newComment.trim()) return;
 
+    // Проверка авторизации
+    const token = localStorage.getItem('access_token');
+    if (!token) {
+      toast.error('Для добавления комментария необходимо войти в аккаунт');
+      navigate('/login');
+      return;
+    }
+
     try {
       await api.post('/comments/', {
         figure: parseInt(id),
         text: newComment
       });
+      
       setNewComment('');
       fetchComments();
+      toast.success('Комментарий успешно добавлен!');
     } catch (err) {
-      alert('Ошибка при добавлении комментария. Возможно, нужно войти в аккаунт.');
+      if (err.response?.status === 401) {
+        toast.error('Сессия истекла. Войдите заново');
+        navigate('/login');
+      } else {
+        toast.error('Ошибка при добавлении комментария');
+      }
     }
   };
 

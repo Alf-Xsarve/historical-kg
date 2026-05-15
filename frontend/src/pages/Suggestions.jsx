@@ -22,6 +22,15 @@ export default function Suggestions() {
     e.preventDefault();
     setLoading(true);
 
+    // Проверка авторизации
+    const token = localStorage.getItem('access_token');
+    if (!token) {
+      toast.error('Для отправки предложения необходимо войти в аккаунт');
+      navigate('/login');
+      setLoading(false);
+      return;
+    }
+
     try {
       await api.post('/suggestions/', formData);
       
@@ -36,14 +45,20 @@ export default function Suggestions() {
         biography: '',
       });
 
-      // Перенаправляем на главную через 1.5 секунды
+      // Перенаправляем на главную
       setTimeout(() => {
         navigate('/');
       }, 1500);
 
     } catch (err) {
       console.error(err.response?.data);
-      toast.error('Ошибка при отправке. Убедитесь, что вы авторизованы.');
+      
+      if (err.response?.status === 401) {
+        toast.error('Сессия истекла. Войдите заново');
+        navigate('/login');
+      } else {
+        toast.error('Ошибка при отправке предложения. Проверьте данные.');
+      }
     } finally {
       setLoading(false);
     }

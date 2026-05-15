@@ -5,3 +5,20 @@
 body {
   font-family: 'Segoe UI', system-ui, sans-serif;
 }
+
+/* Общие улучшения адаптивности */
+.container {
+  @apply px-4 md:px-6 lg:px-8;
+}
+
+/* Карточки */
+.card {
+  @apply transition-all duration-300 hover:-translate-y-2;
+}
+
+/* Для мобильных устройств */
+@media (max-width: 768px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+}
