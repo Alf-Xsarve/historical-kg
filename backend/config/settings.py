@@ -21,7 +21,6 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-
     'django_filters',
 
     'rest_framework',
@@ -39,7 +38,7 @@ AUTH_USER_MODEL = 'users.User'
 MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
-    'whitenoise.middleware.WhiteNoiseMiddleware',   # ← Должен быть сразу после Security
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -111,6 +110,16 @@ SIMPLE_JWT = {
 CORS_ALLOW_ALL_ORIGINS = True
 CORS_ALLOW_CREDENTIALS = True
 
+# ====================== SECURITY (CSRF + Cookies) ======================
+CSRF_TRUSTED_ORIGINS = [
+    'https://historical-kg-production.up.railway.app',
+    'https://*.railway.app',
+    'https://*.up.railway.app',
+]
+
+CSRF_COOKIE_SECURE = True
+SESSION_COOKIE_SECURE = True
+
 # ====================== JAZZMIN ======================
 JAZZMIN_SETTINGS = {
     "site_title": "Исторические лица Кыргызстана",
@@ -144,11 +153,3 @@ JAZZMIN_UI_TWEAKS = {
     "navbar": "navbar-dark",
     "sidebar": "sidebar-dark-primary",
 }
-
-# ====================== CSRF для Railway ======================
-CSRF_TRUSTED_ORIGINS = [
-    'https://historical-kg-production.up.railway.app',
-    'https://*.railway.app',           # на всякий случай
-]
-
-# Если используешь Vercel для фронтенда позже — добавь его домен тоже
