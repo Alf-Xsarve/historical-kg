@@ -144,3 +144,11 @@ JAZZMIN_UI_TWEAKS = {
     "navbar": "navbar-dark",
     "sidebar": "sidebar-dark-primary",
 }
+
+# ====================== CSRF для Railway ======================
+CSRF_TRUSTED_ORIGINS = [
+    'https://historical-kg-production.up.railway.app',
+    'https://*.railway.app',           # на всякий случай
+]
+
+# Если используешь Vercel для фронтенда позже — добавь его домен тоже
