@@ -41,7 +41,6 @@ export default function FigureDetail() {
     e.preventDefault();
     if (!newComment.trim()) return;
 
-    // Проверка авторизации
     const token = localStorage.getItem('access_token');
     if (!token) {
       toast.error('Для добавления комментария необходимо войти в аккаунт');
@@ -79,12 +78,16 @@ export default function FigureDetail() {
 
       <div className="bg-white rounded-3xl shadow-xl overflow-hidden">
         {/* Большое фото */}
-        <div className="h-96 bg-gray-200 relative">
+        <div className="h-80 md:h-96 bg-gray-200 relative">
           {figure.image ? (
             <img
               src={figure.image.replace('http://', 'https://')}
               alt={figure.full_name}
               className="w-full h-full object-cover"
+              onError={(e) => {
+                e.target.onerror = null;
+                e.target.src = 'https://via.placeholder.com/800x400/1f2937/ffffff?text=Фото+отсутствует';
+              }}
             />
           ) : (
             <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-indigo-600 to-blue-700 text-9xl">
@@ -93,10 +96,10 @@ export default function FigureDetail() {
           )}
         </div>
 
-        <div className="p-10">
+        <div className="p-8 md:p-10">
           <h1 className="text-4xl font-bold text-gray-900 mb-4">{figure.full_name}</h1>
-
-          <div className="flex gap-6 text-gray-600 mb-8 text-lg">
+          
+          <div className="flex flex-wrap gap-6 text-gray-600 mb-8 text-lg">
             {figure.birth_year && <span>Родился: <strong>{figure.birth_year}</strong></span>}
             {figure.death_year && <span>Умер: <strong>{figure.death_year}</strong></span>}
             {figure.birth_place && <span>Место рождения: <strong>{figure.birth_place}</strong></span>}
@@ -112,7 +115,6 @@ export default function FigureDetail() {
       <div className="mt-12">
         <h2 className="text-3xl font-bold mb-6">Комментарии ({comments.length})</h2>
 
-        {/* Форма добавления комментария */}
         <form onSubmit={handleAddComment} className="mb-10 bg-white p-6 rounded-2xl shadow">
           <textarea
             value={newComment}
@@ -129,7 +131,6 @@ export default function FigureDetail() {
           </button>
         </form>
 
-        {/* Список комментариев */}
         <div className="space-y-6">
           {comments.length === 0 ? (
             <p className="text-gray-500 text-center py-10">Комментариев пока нет. Будьте первым!</p>

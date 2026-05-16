@@ -58,9 +58,13 @@ export default function FiguresList() {
             <div className="h-56 sm:h-64 bg-gray-200 relative">
               {figure.image ? (
                 <img 
-                  src={figure.image ? figure.image.replace('http://', 'https://') : ''}
+                  src={figure.image.replace('http://', 'https://')}
                   alt={figure.full_name}
                   className="figure-image w-full h-full object-cover group-hover:scale-105 transition duration-300"
+                  onError={(e) => {
+                    e.target.onerror = null;
+                    e.target.src = 'https://via.placeholder.com/400x300/1f2937/ffffff?text=Нет+фото';
+                  }}
                 />
               ) : (
                 <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-indigo-500 to-blue-600 text-7xl">
