@@ -1,11 +1,11 @@
 import axios from 'axios';
 
 const api = axios.create({
-  baseURL: import.meta.env.VITE_API_URL || 'http://127.0.0.1:8000/api',
+  baseURL: import.meta.env.VITE_API_URL || 'https://historical-kg.onrender.com/api',
   headers: {
     'Content-Type': 'application/json',
   },
-  timeout: 15000, // увеличил таймаут
+  timeout: 15000,
 });
 
 // Добавляем токен автоматически
@@ -52,15 +52,12 @@ api.interceptors.response.use(
       } else {
         alert('Сессия истекла. Войдите заново.');
       }
-
-      // Опционально: редирект
-      // window.location.href = '/login';
     }
     return Promise.reject(error);
   }
 );
 
 // Отладка
-console.log('🚀 API Base URL:', import.meta.env.VITE_API_URL || 'http://127.0.0.1:8000/api');
+console.log('🚀 API Base URL:', import.meta.env.VITE_API_URL || 'https://historical-kg.onrender.com/api');
 
 export default api;
