@@ -31,7 +31,6 @@ export default function FiguresList() {
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 py-8 md:py-10">
-      {/* Заголовок + Поиск */}
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-8 gap-4">
         <h1 className="text-3xl md:text-4xl font-bold text-gray-800">Исторические лица</h1>
         
@@ -46,7 +45,6 @@ export default function FiguresList() {
         </div>
       </div>
 
-      {/* Список карточек */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
         {filteredFigures.map((figure) => (
           <Link 
@@ -54,13 +52,12 @@ export default function FiguresList() {
             key={figure.id}
             className="figure-card bg-white rounded-3xl shadow-lg overflow-hidden hover:shadow-2xl transition group"
           >
-            {/* Фото */}
             <div className="h-56 sm:h-64 bg-gray-200 relative">
               {figure.image ? (
                 <img 
                   src={figure.image.replace('http://', 'https://')}
                   alt={figure.full_name}
-                  className="figure-image w-full h-full object-cover group-hover:scale-105 transition duration-300"
+                  className="w-full h-full object-cover group-hover:scale-105 transition duration-300"
                   onError={(e) => {
                     e.target.onerror = null;
                     e.target.src = 'https://via.placeholder.com/400x300/334155/ffffff?text=Нет+фото';
@@ -75,11 +72,9 @@ export default function FiguresList() {
 
             <div className="p-5 md:p-6">
               <h3 className="text-xl md:text-2xl font-bold text-gray-900 mb-2 line-clamp-2">{figure.full_name}</h3>
-              
               <p className="text-gray-600 mb-4 line-clamp-3 text-sm md:text-base">
                 {figure.biography?.substring(0, 130)}...
               </p>
-
               <div className="flex justify-between text-xs md:text-sm text-gray-500">
                 {figure.birth_year && <span>Род. {figure.birth_year}</span>}
                 {figure.death_year && <span>Умер {figure.death_year}</span>}
@@ -88,12 +83,6 @@ export default function FiguresList() {
           </Link>
         ))}
       </div>
-
-      {filteredFigures.length === 0 && search && (
-        <div className="text-center py-20 text-gray-500 text-lg">
-          Ничего не найдено по запросу "<span className="font-medium">{search}</span>"
-        </div>
-      )}
     </div>
   );
 }
