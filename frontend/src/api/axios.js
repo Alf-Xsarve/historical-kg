@@ -5,7 +5,7 @@ const api = axios.create({
   headers: {
     'Content-Type': 'application/json',
   },
-  timeout: 10000,
+  timeout: 15000, // увеличил таймаут
 });
 
 // Добавляем токен автоматически
@@ -17,22 +17,26 @@ api.interceptors.request.use((config) => {
   return config;
 });
 
-// ГЛОБАЛЬНАЯ ЗАМЕНА http → https (исправляет Mixed Content)
+// Глобальная обработка ответа: http → https + защита от CORB
 api.interceptors.response.use(
   (response) => {
-    // Заменяем http на https во всех строках ответа (особенно для изображений)
-    if (response.data && typeof response.data === 'object') {
-      const replaceHttp = (obj) => {
-        Object.keys(obj).forEach(key => {
-          if (typeof obj[key] === 'string' && obj[key].startsWith('http://')) {
-            obj[key] = obj[key].replace('http://', 'https://');
-          } else if (typeof obj[key] === 'object' && obj[key] !== null) {
-            replaceHttp(obj[key]);
-          }
+    // Рекурсивная замена http на https во всех строках (особенно для image)
+    const replaceHttp = (data) => {
+      if (typeof data === 'string' && data.startsWith('http://')) {
+        return data.replace('http://', 'https://');
+      }
+      if (data && typeof data === 'object') {
+        Object.keys(data).forEach(key => {
+          data[key] = replaceHttp(data[key]);
         });
-      };
-      replaceHttp(response.data);
+      }
+      return data;
+    };
+
+    if (response.data) {
+      response.data = replaceHttp(response.data);
     }
+
     return response;
   },
   (error) => {
@@ -45,13 +49,18 @@ api.interceptors.response.use(
 
       if (window.toast) {
         window.toast.error('Сессия истекла. Войдите заново.');
+      } else {
+        alert('Сессия истекла. Войдите заново.');
       }
+
+      // Опционально: редирект
+      // window.location.href = '/login';
     }
     return Promise.reject(error);
   }
 );
 
-// Для отладки
+// Отладка
 console.log('🚀 API Base URL:', import.meta.env.VITE_API_URL || 'http://127.0.0.1:8000/api');
 
 export default api;
