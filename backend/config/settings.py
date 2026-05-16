@@ -91,6 +91,10 @@ STATICFILES_DIRS = [
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
 
+# ====================== FIX MIXED CONTENT (HTTPS) ======================
+if not DEBUG:
+    MEDIA_URL = 'https://historical-kg-production.up.railway.app/media/'
+
 # ====================== DRF + JWT ======================
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
@@ -110,7 +114,7 @@ SIMPLE_JWT = {
 CORS_ALLOW_ALL_ORIGINS = True
 CORS_ALLOW_CREDENTIALS = True
 
-# ====================== SECURITY (CSRF + Cookies) ======================
+# ====================== SECURITY ======================
 CSRF_TRUSTED_ORIGINS = [
     'https://historical-kg-production.up.railway.app',
     'https://*.railway.app',
