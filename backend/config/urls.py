@@ -6,7 +6,6 @@ from drf_yasg.views import get_schema_view
 from drf_yasg import openapi
 from rest_framework import permissions
 
-# Swagger
 schema_view = get_schema_view(
    openapi.Info(
       title="Исторические лица Кыргызстана API",
@@ -25,14 +24,13 @@ urlpatterns = [
     path('swagger<format>/', schema_view.without_ui(cache_timeout=0), name='schema-swagger-json'),
 ]
 
-# Добавляем поддержку смены языка (если нужно)
-# Если не используешь переключение языков — можно закомментировать
-from django.conf.urls.i18n import i18n_patterns
+# Убрали if DEBUG — теперь всегда добавляем static/media (важно для Railway)
+urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
+# Поддержка смены языка (если нужно)
+from django.conf.urls.i18n import i18n_patterns
 urlpatterns += i18n_patterns(
     path('admin/', admin.site.urls),
     prefix_default_language=False,
 )
-
-if settings.DEBUG:
-    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
