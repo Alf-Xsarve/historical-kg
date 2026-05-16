@@ -1,16 +1,52 @@
-# React + Vite
+# 🇰🇬 Кыргыз Тарыхы — Исторические лица Кыргызстана
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+**Дипломная работа** — современный веб-портал о выдающихся исторических личностях Кыргызстана.
 
-Currently, two official plugins are available:
+![Main Preview](https://via.placeholder.com/800x400?text=Кыргыз+Тарыхы)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## ✨ Основные возможности
 
-## React Compiler
+- Красивый каталог исторических личностей с фотографиями
+- Подробные биографии и информация о деятелях
+- Система комментариев под каждой личностью
+- Авторизация и регистрация пользователей (JWT)
+- Форма предложения новых исторических лиц (с модерацией)
+- Личный кабинет с просмотром своих предложений
+- Адаптивный дизайн (полностью responsive)
+- Удобная админ-панель с возможностью одобрения предложений
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## 🛠 Технологический стек
 
-## Expanding the ESLint configuration
+**Backend:**
+- Django 5.2 + Django REST Framework
+- JWT Authentication (SimpleJWT)
+- WhiteNoise (статика)
+- Jazzmin (админ-панель)
+- SQLite / PostgreSQL
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+**Frontend:**
+- React + Vite
+- Tailwind CSS
+- Axios
+- React Router DOM
+- Lucide Icons
+
+**Деплой:**
+- Backend: Railway
+- Frontend: Vercel
+
+## 🚀 Быстрый запуск локально
+
+```bash
+# 1. Backend
+cd backend
+python -m venv venv
+venv\Scripts\activate
+pip install -r requirements.txt
+python manage.py migrate
+python manage.py runserver
+
+# 2. Frontend (в новом терминале)
+cd frontend
+npm install
+npm run dev

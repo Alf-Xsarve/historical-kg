@@ -4,21 +4,66 @@
 
 body {
   font-family: 'Segoe UI', system-ui, sans-serif;
+  line-height: 1.6;
 }
 
-/* Общие улучшения адаптивности */
+/* ====================== ОБЩИЕ СТИЛИ ====================== */
 .container {
-  @apply px-4 md:px-6 lg:px-8;
+  @apply px-4 sm:px-6 lg:px-8;
 }
 
 /* Карточки */
 .card {
-  @apply transition-all duration-300 hover:-translate-y-2;
+  @apply transition-all duration-300 hover:-translate-y-2 active:scale-[0.98];
 }
 
-/* Для мобильных устройств */
-@media (max-width: 768px) {
+/* Кнопки */
+.btn {
+  @apply transition-all duration-200 active:scale-95;
+}
+
+/* ====================== АДАПТИВНОСТЬ ====================== */
+
+/* Мобильные устройства */
+@media (max-width: 640px) {
+  h1 {
+    font-size: 2.25rem;
+    line-height: 1.1;
+  }
+  
+  h2 {
+    font-size: 1.75rem;
+  }
+
   .grid {
     grid-template-columns: 1fr;
+    gap: 1.25rem;
   }
+}
+
+/* Планшеты */
+@media (max-width: 768px) {
+  .hero-text {
+    font-size: 2.8rem;
+  }
+}
+
+/* Улучшение формы на мобильных */
+textarea, input {
+  @apply text-base; /* предотвращает зум на iOS */
+}
+
+/* Красивые карточки на всех устройствах */
+.figure-card {
+  @apply bg-white rounded-3xl shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-300;
+}
+
+/* Улучшение фото */
+.figure-image {
+  @apply w-full h-64 object-cover transition-transform duration-300 group-hover:scale-105;
+}
+
+/* Подвал на мобильных */
+footer {
+  @apply text-sm;
 }
