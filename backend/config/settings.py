@@ -89,12 +89,11 @@ STATICFILES_DIRS = [
 ]
 
 MEDIA_URL = '/media/'
+MEDIA_ROOT = BASE_DIR / 'media'          # ← Обычный путь (стабильный)
 
-# ====================== RAILWAY VOLUME ======================
+# ====================== FIX MIXED CONTENT ======================
 if not DEBUG:
-    MEDIA_ROOT = '/app/media'          # ← Для Volume на Railway
-else:
-    MEDIA_ROOT = BASE_DIR / 'media'    # Для локальной разработки
+    MEDIA_URL = 'https://historical-kg-production.up.railway.app/media/'
 
 # ====================== DRF + JWT ======================
 REST_FRAMEWORK = {
