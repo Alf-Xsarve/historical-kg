@@ -91,7 +91,7 @@ STATICFILES_DIRS = [
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
 
-# ====================== FIX MIXED CONTENT (HTTPS) ======================
+# ====================== FIX MIXED CONTENT ======================
 if not DEBUG:
     MEDIA_URL = 'https://historical-kg-production.up.railway.app/media/'
 
