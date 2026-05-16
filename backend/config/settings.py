@@ -89,11 +89,7 @@ STATICFILES_DIRS = [
 ]
 
 MEDIA_URL = '/media/'
-MEDIA_ROOT = BASE_DIR / 'media'          # ← Обычный путь (стабильный)
-
-# ====================== FIX MIXED CONTENT ======================
-if not DEBUG:
-    MEDIA_URL = 'https://historical-kg-production.up.railway.app/media/'
+MEDIA_ROOT = BASE_DIR / 'media'
 
 # ====================== DRF + JWT ======================
 REST_FRAMEWORK = {
@@ -116,9 +112,8 @@ CORS_ALLOW_CREDENTIALS = True
 
 # ====================== SECURITY ======================
 CSRF_TRUSTED_ORIGINS = [
-    'https://historical-kg-production.up.railway.app',
-    'https://*.railway.app',
-    'https://*.up.railway.app',
+    'https://*.render.com',           # ← Для Render
+    'https://historical-kg.onrender.com',  # если уже есть домен
 ]
 
 CSRF_COOKIE_SECURE = True
