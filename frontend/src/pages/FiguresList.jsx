@@ -63,7 +63,7 @@ export default function FiguresList() {
                   className="figure-image w-full h-full object-cover group-hover:scale-105 transition duration-300"
                   onError={(e) => {
                     e.target.onerror = null;
-                    e.target.src = 'https://via.placeholder.com/400x300/1f2937/ffffff?text=Нет+фото';
+                    e.target.src = 'https://via.placeholder.com/400x300/334155/ffffff?text=Нет+фото';
                   }}
                 />
               ) : (
