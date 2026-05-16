@@ -6,7 +6,7 @@ import toast from 'react-hot-toast';
 export default function FigureDetail() {
   const { id } = useParams();
   const navigate = useNavigate();
-  
+
   const [figure, setFigure] = useState(null);
   const [comments, setComments] = useState([]);
   const [newComment, setNewComment] = useState('');
@@ -54,7 +54,7 @@ export default function FigureDetail() {
         figure: parseInt(id),
         text: newComment
       });
-      
+
       setNewComment('');
       fetchComments();
       toast.success('Комментарий успешно добавлен!');
@@ -81,8 +81,8 @@ export default function FigureDetail() {
         {/* Большое фото */}
         <div className="h-96 bg-gray-200 relative">
           {figure.image ? (
-            <img 
-              src={figure.image} 
+            <img
+              src={figure.image.replace('http://', 'https://')}
               alt={figure.full_name}
               className="w-full h-full object-cover"
             />
@@ -95,7 +95,7 @@ export default function FigureDetail() {
 
         <div className="p-10">
           <h1 className="text-4xl font-bold text-gray-900 mb-4">{figure.full_name}</h1>
-          
+
           <div className="flex gap-6 text-gray-600 mb-8 text-lg">
             {figure.birth_year && <span>Родился: <strong>{figure.birth_year}</strong></span>}
             {figure.death_year && <span>Умер: <strong>{figure.death_year}</strong></span>}

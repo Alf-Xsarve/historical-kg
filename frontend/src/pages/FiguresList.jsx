@@ -58,7 +58,7 @@ export default function FiguresList() {
             <div className="h-56 sm:h-64 bg-gray-200 relative">
               {figure.image ? (
                 <img 
-                  src={figure.image}
+                  src={figure.image ? figure.image.replace('http://', 'https://') : ''}
                   alt={figure.full_name}
                   className="figure-image w-full h-full object-cover group-hover:scale-105 transition duration-300"
                 />

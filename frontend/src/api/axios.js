@@ -5,7 +5,7 @@ const api = axios.create({
   headers: {
     'Content-Type': 'application/json',
   },
-  timeout: 10000, // 10 секунд
+  timeout: 10000,
 });
 
 // Добавляем токен автоматически
@@ -17,24 +17,34 @@ api.interceptors.request.use((config) => {
   return config;
 });
 
-// Обработка ошибок (особенно 401 - токен истёк)
+// ГЛОБАЛЬНАЯ ЗАМЕНА http → https (исправляет Mixed Content)
 api.interceptors.response.use(
-  (response) => response,
+  (response) => {
+    // Заменяем http на https во всех строках ответа (особенно для изображений)
+    if (response.data && typeof response.data === 'object') {
+      const replaceHttp = (obj) => {
+        Object.keys(obj).forEach(key => {
+          if (typeof obj[key] === 'string' && obj[key].startsWith('http://')) {
+            obj[key] = obj[key].replace('http://', 'https://');
+          } else if (typeof obj[key] === 'object' && obj[key] !== null) {
+            replaceHttp(obj[key]);
+          }
+        });
+      };
+      replaceHttp(response.data);
+    }
+    return response;
+  },
   (error) => {
     if (error.response?.status === 401) {
       console.warn('Token expired or invalid');
       
-      // Очищаем токены
       localStorage.removeItem('access_token');
       localStorage.removeItem('refresh_token');
       localStorage.removeItem('username');
 
-      // Можно добавить редирект на логин (по желанию)
-      // window.location.href = '/login';
-      
-      // Показываем уведомление (если используется toast)
       if (window.toast) {
-        window.toast.error('Сессия истекла. Пожалуйста, войдите заново.');
+        window.toast.error('Сессия истекла. Войдите заново.');
       }
     }
     return Promise.reject(error);
