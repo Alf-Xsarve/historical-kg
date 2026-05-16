@@ -86,7 +86,7 @@ export default function FigureDetail() {
               className="w-full h-full object-cover"
               onError={(e) => {
                 e.target.onerror = null;
-                e.target.src = 'https://via.placeholder.com/800x400/1f2937/ffffff?text=Фото+отсутствует';
+                e.target.src = 'https://via.placeholder.com/800x500/334155/ffffff?text=Фото+отсутствует';
               }}
             />
           ) : (
