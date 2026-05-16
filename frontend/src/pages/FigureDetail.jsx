@@ -85,6 +85,7 @@ export default function FigureDetail() {
               alt={figure.full_name}
               className="w-full h-full object-cover"
               onError={(e) => {
+                console.log("IMAGE ERROR:", figure.image); // Для отладки
                 e.target.onerror = null;
                 e.target.src = 'https://via.placeholder.com/800x500/334155/ffffff?text=Фото+отсутствует';
               }}

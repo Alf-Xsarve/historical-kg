@@ -112,12 +112,13 @@ CORS_ALLOW_CREDENTIALS = True
 
 # ====================== SECURITY ======================
 CSRF_TRUSTED_ORIGINS = [
-    'https://*.render.com',           # ← Для Render
-    'https://historical-kg.onrender.com',  # если уже есть домен
+    'https://*.render.com',
+    'https://historical-kg.onrender.com',
 ]
 
 CSRF_COOKIE_SECURE = True
 SESSION_COOKIE_SECURE = True
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')   # ← Добавил
 
 # ====================== JAZZMIN ======================
 JAZZMIN_SETTINGS = {

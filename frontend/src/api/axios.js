@@ -17,15 +17,14 @@ api.interceptors.request.use((config) => {
   return config;
 });
 
-// Глобальная обработка ответа: http → https + защита от CORB
+// Глобальная обработка ответа: http → https
 api.interceptors.response.use(
   (response) => {
-    // Рекурсивная замена http на https во всех строках (особенно для image)
     const replaceHttp = (data) => {
       if (typeof data === 'string' && data.startsWith('http://')) {
         return data.replace('http://', 'https://');
       }
-      if (data && typeof data === 'object') {
+      if (data && typeof data === 'object' && data !== null) {
         Object.keys(data).forEach(key => {
           data[key] = replaceHttp(data[key]);
         });
@@ -36,7 +35,6 @@ api.interceptors.response.use(
     if (response.data) {
       response.data = replaceHttp(response.data);
     }
-
     return response;
   },
   (error) => {
