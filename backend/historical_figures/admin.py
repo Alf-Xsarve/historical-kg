@@ -5,10 +5,23 @@ from .models import HistoricalFigure, Comment, Suggestion
 
 @admin.register(HistoricalFigure)
 class HistoricalFigureAdmin(admin.ModelAdmin):
-    list_display = ('full_name', 'birth_year', 'death_year', 'birth_place', 'created_at')
+    list_display = ('image_tag', 'full_name', 'birth_year', 'death_year',
+                    'birth_place', 'created_at')
     search_fields = ('full_name', 'biography')
     list_filter = ('birth_year', 'created_at')
     readonly_fields = ('created_at', 'updated_at')
+
+    # Красивое отображение фото в списке
+    def image_tag(self, obj):
+        if obj.image:
+            return format_html(
+                '<img src="{}" width="60" height="60" '
+                'style="object-fit:cover; border-radius:4px;" />',
+                obj.image.url
+            )
+        return format_html('<span style="color:#999;">Нет фото</span>')
+
+    image_tag.short_description = 'Фото'
 
 
 @admin.register(Comment)
