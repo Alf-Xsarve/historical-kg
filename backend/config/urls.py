@@ -21,14 +21,13 @@ urlpatterns = [
     path('api/', include('api.urls')),
     path('api/auth/', include('users.urls')),
     path('swagger/', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
-    path('swagger<format>/', schema_view.without_ui(cache_timeout=0), name='schema-swagger-json'),
 ]
 
-# Static и Media файлы (важно для Render)
+# Static и Media файлы (очень важно для Render)
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
-# Поддержка i18n (языки) — без дублирования admin
+# Поддержка i18n (языки)
 from django.conf.urls.i18n import i18n_patterns
 urlpatterns += i18n_patterns(
     path('admin/', admin.site.urls),
