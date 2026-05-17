@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const api = axios.create({
-  baseURL: import.meta.env.VITE_API_URL || 'https://historical-kg.onrender.com/api',
+  baseURL: import.meta.env.VITE_API_URL || 'https://evgeniy-production-a3b7.up.railway.app/api/',
   headers: {
     'Content-Type': 'application/json',
   },
@@ -17,14 +17,15 @@ api.interceptors.request.use((config) => {
   return config;
 });
 
-// Глобальная обработка ответа: http → https
+// Глобальная обработка ответа: http → https + защита от CORB
 api.interceptors.response.use(
   (response) => {
+    // Рекурсивная замена http на https во всех строках (особенно для image)
     const replaceHttp = (data) => {
       if (typeof data === 'string' && data.startsWith('http://')) {
-        return data.replace('http://', 'https://');
+        return data;
       }
-      if (data && typeof data === 'object' && data !== null) {
+      if (data && typeof data === 'object') {
         Object.keys(data).forEach(key => {
           data[key] = replaceHttp(data[key]);
         });
@@ -35,6 +36,7 @@ api.interceptors.response.use(
     if (response.data) {
       response.data = replaceHttp(response.data);
     }
+
     return response;
   },
   (error) => {
@@ -56,6 +58,6 @@ api.interceptors.response.use(
 );
 
 // Отладка
-console.log('🚀 API Base URL:', import.meta.env.VITE_API_URL || 'https://historical-kg.onrender.com/api');
+console.log('🚀 API Base URL:', import.meta.env.VITE_API_URL || 'https://evgeniy-production-a3b7.up.railway.app/api/');
 
 export default api;

@@ -71,6 +71,7 @@ export default function FigureDetail() {
   if (!figure) return <div className="text-center py-20 text-2xl">Лицо не найдено</div>;
 
   return (
+    
     <div className="max-w-4xl mx-auto px-6 py-10">
       <Link to="/figures" className="text-indigo-600 hover:underline mb-6 inline-block">
         ← Назад к списку
@@ -81,15 +82,18 @@ export default function FigureDetail() {
         <div className="h-80 md:h-96 bg-gray-200 relative">
           {figure.image ? (
             <img
-              src={figure.image.replace('http://', 'https://')}
-              alt={figure.full_name}
-              className="w-full h-full object-cover"
-              onError={(e) => {
-                console.log("IMAGE ERROR:", figure.image); // Для отладки
-                e.target.onerror = null;
-                e.target.src = 'https://via.placeholder.com/800x500/334155/ffffff?text=Фото+отсутствует';
-              }}
-            />
+  src={figure.image}
+  alt={figure.full_name}
+  className="w-full h-full object-cover"
+  onError={(e) => {
+    console.log("IMAGE ERROR:", figure.image);
+    e.target.onerror = null;
+    e.target.src =
+      'https://via.placeholder.com/800x500/334155/ffffff?text=Фото+отсутствует';
+  }}
+/>
+
+
           ) : (
             <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-indigo-600 to-blue-700 text-9xl">
               👤
