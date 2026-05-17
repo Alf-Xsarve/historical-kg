@@ -24,11 +24,11 @@ urlpatterns = [
     path('swagger<format>/', schema_view.without_ui(cache_timeout=0), name='schema-swagger-json'),
 ]
 
-# Убрали if DEBUG — теперь всегда добавляем static/media (важно для Railway)
+# Static и Media файлы (важно для Render)
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
-# Поддержка смены языка (если нужно)
+# Поддержка i18n (языки) — без дублирования admin
 from django.conf.urls.i18n import i18n_patterns
 urlpatterns += i18n_patterns(
     path('admin/', admin.site.urls),
