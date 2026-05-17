@@ -113,6 +113,7 @@ CORS_ALLOW_CREDENTIALS = True
 # ====================== SECURITY ======================
 # ====================== SECURITY ======================
 CSRF_TRUSTED_ORIGINS = [
+    'https://historical-kg.onrender.com',
     'https://historical-kg.vercel.app',
     'https://*.vercel.app',
     'https://*.up.vercel.app',
