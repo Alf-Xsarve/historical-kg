@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const api = axios.create({
-  baseURL: import.meta.env.VITE_API_URL || 'https://evgeniy-production-a3b7.up.railway.app/api/',
+  baseURL: import.meta.env.VITE_API_URL || 'https://historical-kg.onrender.com/api/',
   headers: {
     'Content-Type': 'application/json',
   },
@@ -58,6 +58,6 @@ api.interceptors.response.use(
 );
 
 // Отладка
-console.log('🚀 API Base URL:', import.meta.env.VITE_API_URL || 'https://evgeniy-production-a3b7.up.railway.app/api/');
+console.log('🚀 API Base URL:', import.meta.env.VITE_API_URL || 'https://historical-kg.onrender.com/api/');
 
 export default api;
