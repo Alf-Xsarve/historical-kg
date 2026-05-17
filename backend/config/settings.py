@@ -113,9 +113,9 @@ CORS_ALLOW_CREDENTIALS = True
 # ====================== SECURITY ======================
 # ====================== SECURITY ======================
 CSRF_TRUSTED_ORIGINS = [
-    'https://evgeniy-production-a3b7.up.railway.app',
-    'https://*.railway.app',
-    'https://*.up.railway.app',
+    'https://historical-kg.vercel.app',
+    'https://*.vercel.app',
+    'https://*.up.vercel.app',
 ]
 
 CSRF_COOKIE_SECURE = True
